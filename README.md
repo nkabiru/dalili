@@ -8,7 +8,17 @@ To be [forewarned is to be forearmed](https://www.collinsdictionary.com/dictiona
 
 ## Features
 
-## Installation 
+## Developing
+
+Using virtualenv, create:
+
+```
+virtualenv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+## Installation
 
 ## Usage
 
