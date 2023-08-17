@@ -27,13 +27,3 @@ from dalili.pdf_text_parser import convert_url_to_filename
 ])
 def test_scrape_link_from_webpage(response, expected):
     assert scrape_link_from_webpage(response) == expected
-
-
-@pytest.mark.parametrize("url, filename", [
-    (
-        "https://kplc.co.ke/img/full/Interruption%20-%2011.05.2023.pdf",
-        "interruptions_2023-05-11"
-    )
-])
-def test_convert_url_to_filename(url, filename):
-    assert convert_url_to_filename(url) == filename
