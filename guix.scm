@@ -32,7 +32,6 @@
   (arguments `(#:tests? #f))
   (propagated-inputs (list python
 			   python-minimal-wrapper
-			   python-asgiref
 			   python-beautifulsoup4
 			   python-certifi
 			   python-charset-normalizer
@@ -42,7 +41,7 @@
 			   python-urllib3
 			   python-pytest
 			   python-pdftotext))
-  (home-page "")
-  (synopsis "")
-  (description "")
-  (license #f))
+  (home-page "https://github.com/nkabiru/dalili")
+  (synopsis "A tool to notify you when Kenya Power has scheduled a power interruption in your area so that you can plan yourself accordingly.")
+  (description "A tool to notify you when Kenya Power has scheduled a power interruption in your area so that you can plan yourself accordingly.")
+  (license license:gpl3))
