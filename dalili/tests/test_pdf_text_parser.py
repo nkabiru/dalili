@@ -1,6 +1,5 @@
 import pytest
 from dalili.pdf_text_parser import scrape_link_from_webpage
-from dalili.pdf_text_parser import convert_url_to_filename
 
 
 @pytest.mark.parametrize("response, expected", [
