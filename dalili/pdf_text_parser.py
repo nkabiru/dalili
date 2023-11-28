@@ -1,10 +1,6 @@
-import requests
 import re
 
 from bs4 import BeautifulSoup
-from datetime import datetime
-from urllib.parse import unquote
-from urllib.parse import urlparse
 
 
 def scrape_link_from_webpage(webpage: str) -> str:
