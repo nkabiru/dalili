@@ -8,7 +8,7 @@ from dalili.pdf_text_parser import scrape_link_from_webpage
 
 def fetch_interruptions(binary):
     text = "\n".join(
-        pdftotext.PDF(io.BytesIO(binary))
+        pdftotext.PDF(io.BytesIO(binary), raw=True)
     )
     # TODO: Re-work regex
     areas = re.findall(r"AREA: +(?P<area>.*)", text)
