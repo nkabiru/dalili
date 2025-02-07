@@ -1,49 +1,34 @@
 import re
-import io
-import pdftotext
+
 import requests
+from bs4 import BeautifulSoup, SoupStrainer
 
-from dalili.pdf_text_parser import scrape_link_from_webpage
 
+def scrape_link_from_webpage(url):
+    response = requests.get(url)
 
-def fetch_interruptions(binary):
-    text = "\n".join(
-        pdftotext.PDF(io.BytesIO(binary), raw=True)
-    )
-    # TODO: Re-work regex
-    areas = re.findall(r"AREA: +(?P<area>.*)", text)
-    dates = re.findall(r"DATE: +\w+ (\d{2}.\d{2}. ?\d{4})", text)
-    times = re.findall(
-        r"TIME: ?(\d{1,2}.\d{2} A.M.?) ?[-–] ?(\d{1,2}.\d{2} P.M.?)", text)
-    locations = re.findall(
-        r"P.M.?\s+([\w\s,&/.'’-]+)&\s*adjacent\s*customers?", text)
-    # If areas list doesn't have the same no. of elements as the date & time, raise an errori
-    interruptions = []
-    if len(areas) == len(dates) == len(times) == len(locations):
-        for i in range(len(areas)):
-            interruptions.append({
-                "area": areas[i],
-                "date": dates[i],
-                "time": times[i],
-                "locations": locations[i].replace('\n', '')
-        })
+    if response.ok:
+        power_schedule_div = SoupStrainer(id="powerschedule")
+        soup = BeautifulSoup(
+            response.text, "html.parser", parse_only=power_schedule_div
+        )
+        return soup.find_all(
+            href=re.compile(r"https://kplc.co.ke/storage/[^\s]+\.pdf\b")
+        )[0]["href"]
     else:
-        raise Exception("Regex matches don't match up")
-    return interruptions
+        return None
+
+
+def download_pdf(url):
+# TODO: Download the pdf for parsing.
+
+
+def main():
+    latest_link = scrape_link_from_webpage(
+        "https://kplc.co.ke/customer-support#powerschedule"
+    )
+
 
 
 if __name__ == "__main__":
-    response = requests.get(
-        scrape_link_from_webpage(
-            requests.get(
-                "https://kplc.co.ke/category/view/50/planned-power-interruptions"
-            ).content
-        )
-    )
-    if response.ok:
-        interruptions = fetch_interruptions(
-            response.content
-        )
-        print(interruptions)
-    else:
-        exit("Failed to download PDF file from KPLC")
+    main()
