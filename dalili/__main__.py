@@ -6,9 +6,13 @@ from bs4 import BeautifulSoup, SoupStrainer
 
 
 def scrape_link_from_webpage(url):
-    response = requests.get(url)
+    """
+    Get the <a> tag with a href attribute url that points to the latest interruptions PDF file.
+    """
+    # Timeout after 5s
+    response = requests.get(url, timeout=5)
 
-    if response.ok:
+    if response.status_code == requests.codes.ok:
         power_schedule_div = SoupStrainer(id="powerschedule")
         soup = BeautifulSoup(
             response.text, "html.parser", parse_only=power_schedule_div
