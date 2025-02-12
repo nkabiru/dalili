@@ -33,7 +33,7 @@ def create_pdf_dir() -> None:
         print("Folder created")
 
 
-def download_pdf(url) -> bool:
+def download_pdf(url) -> str | None:
     """
     Downloads the pdf into the pdfs folder.
     """
@@ -42,7 +42,8 @@ def download_pdf(url) -> bool:
 
     # Check if file already exists
     if os.path.exists(filepath):
-        return True
+        print("File already exists")
+        return filepath
 
     # TODO: Check if existing file is complete.
 
@@ -52,11 +53,22 @@ def download_pdf(url) -> bool:
         with open(filepath, mode="wb") as file:
             file.write(response.content)
         print("File downloaded")
-        return True
+        return filepath
 
     else:
         print("File not downloaded")
-        return False
+        return None
+
+
+def read_pdf(pdf) -> str:
+    from pypdf import PdfReader
+
+    reader = PdfReader(pdf)
+    text = ""
+    for page in reader.pages:
+        text = text + page.extract_text()
+
+    return text
 
 
 def main() -> None:
@@ -64,7 +76,12 @@ def main() -> None:
     print(f"Link obtained: {url}")
 
     create_pdf_dir()
-    download_pdf(url)
+    pdf = download_pdf(url)
+
+    # Read the pdf file.
+    if pdf:
+        text = read_pdf(pdf)
+        print(text)
 
 
 if __name__ == "__main__":
