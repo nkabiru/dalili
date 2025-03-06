@@ -1,27 +1,36 @@
 # Dalili
+
 ## Introduction
 
 **DISCLAIMER**: This tool is still in the early stages of development.
 
-A tool to notify you when Kenya Power has scheduled a power interruption in your area so that you can plan yourself accordingly.
-To be [forewarned is to be forearmed](https://www.collinsdictionary.com/dictionary/english/forewarned-is-forearmed)! 
-
-## Features
+A script that creates a Gmail calendar event to remind you if your location is scheduled for power interruption by Kenya Power.
+To be [forewarned is to be forearmed](https://www.collinsdictionary.com/dictionary/english/forewarned-is-forearmed)!
 
 ## Developing
 
-Using virtualenv, create:
+Using `venv`, create:
 
-```
-virtualenv .venv
+```bash
+python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
 ## Installation
 
+### Creating service.json for GMail Auth
+
+### Setting up crontab
+
+I recommend setting it to run once per week. They usually have the new schedule up every Thursday.
+
+```bash
+crontab -e
+```
+
 ## Usage
 
+After following the installation instructions above, you're good to go!
+
 ## Contributing
-
-
